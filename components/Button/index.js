@@ -1,14 +1,19 @@
-import React, {Component} from 'react';
-// import PromType from 'prop-type';
-import {TouchableOpacity} from 'react-native';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TouchableOpacity } from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
 
-function Button({iconName, onPress}){
-    return(
-        <TouchableOpacity>
-            <FontAwesome name={iconName} size={80} color="white"/>
+function Button ({iconName, onPress}){
+    return (
+        <TouchableOpacity onPress = {onPress}>
+            <FontAwesome name = {iconName} size={80} color="white"/>
         </TouchableOpacity>
     );
 }
+
+Button.propTypes = {
+    iconName: PropTypes.string.isRequired,
+    onPress: PropTypes.func.isRequired
+};
 
 export default Button;

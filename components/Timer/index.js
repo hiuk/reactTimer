@@ -1,44 +1,24 @@
-import React , {Component} from "react";
-import {View, Text, StyleSheet} from 'react-native';
-import Button from '../Button';
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux';
+import { actionCreators as timerActions } from "../../reducer";
+import Timer from "./presenter";
 
-class Timer extends Component{
-    render() {
-        return(
-            <View style={styles.container}>
-            <View style={styles.upper}>
-                <Text style={styles.time}>25:00</Text>
-            </View>
-            <View style={styles.lower}>
-                <Button iconName="play-circle"/>
-                <Button iconName="stop-circle"/>
-            </View>
-            </View>
-        );
-    }
+function mapStateToProps(state){
+    const {isPlaying, elapsedTime, timeDuration} = state;
+
+    return {
+        isPlaying,
+        elapsedTime,
+        timeDuration
+    };
 }
 
-const styles = StyleSheet.create(
-    {
-        container:{
-            flex:1,
-            backgroundColor:"#FF4F33",
-        },
-        upper:{
-            flex:2,
-            justifyContent:'center',
-            alignItems:'center',
-        },
-        lower:{
-            flex:1,
-            justifyContent:'center',
-            alignItems:'center'
-        },
-        time:{
-            color:'white',
-            fontSize:120,
-            fontWeight:'100'
-        }
-    }
-)
-export default Timer;
+function mapDispatchToProps(dispatch){
+    return {
+        startTimer:bindActionCreators(timerActions.startTimer, dispatch),
+        restartTimer:bindActionCreators(timerActions.restartTimer, dispatch),
+        addSecond:bindActionCreators(timerActions.addSecond, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);
